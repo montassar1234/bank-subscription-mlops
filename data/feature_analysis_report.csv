@@ -1,0 +1,17 @@
+feature,type,included_in_model,decision,leakage_risk,missing_rate_percent,unique_values,target_association,preprocessing,rationale
+poutcome,categorical,True,keep,low,0.0,4,0.3116,one_hot_encode,Retained for pre-contact modeling.
+contact,categorical,True,keep,low,0.0,3,0.1512,one_hot_encode,Retained for pre-contact modeling.
+housing,categorical,True,keep,low,0.0,2,0.139,one_hot_encode,Retained for pre-contact modeling.
+job,categorical,True,keep,low,0.0,12,0.1351,one_hot_encode,Retained for pre-contact modeling.
+pdays,numeric,True,keep,low,0.0,559,0.1036,standardize,Retained for pre-contact modeling.
+previous,numeric,True,keep,low,0.0,41,0.0932,standardize,Retained for pre-contact modeling.
+education,categorical,True,keep,low,0.0,4,0.0722,one_hot_encode,Retained for pre-contact modeling.
+loan,categorical,True,keep,low,0.0,2,0.0679,one_hot_encode,Retained for pre-contact modeling.
+marital,categorical,True,keep,low,0.0,3,0.0656,one_hot_encode,Retained for pre-contact modeling.
+balance,numeric,True,keep,low,0.0,7168,0.0528,standardize,Retained for pre-contact modeling.
+age,numeric,True,keep,low,0.0,77,0.0252,standardize,Retained for pre-contact modeling.
+default,categorical,True,keep,low,0.0,2,0.0217,one_hot_encode,Retained for pre-contact modeling.
+month,categorical,True,keep_with_monitoring,medium,0.0,12,0.2598,one_hot_encode,Operational timing variable kept for campaign planning but must match the prediction moment.
+campaign,numeric,True,keep_with_monitoring,medium,0.0,48,0.0732,standardize,Operational timing variable kept for campaign planning but must match the prediction moment.
+day,numeric,True,keep_with_monitoring,medium,0.0,31,0.0283,standardize,Operational timing variable kept for campaign planning but must match the prediction moment.
+duration,numeric,False,remove,high,0.0,1573,0.0,not_used,Post-call information causes target leakage for pre-contact scoring.

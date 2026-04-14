@@ -1,0 +1,51 @@
+services:
+  mlflow:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bank-mlflow
+    command:
+      [
+        "mlflow",
+        "server",
+        "--backend-store-uri",
+        "sqlite:///app/mlflow.db",
+        "--default-artifact-root",
+        "file:///app/mlartifacts",
+        "--serve-artifacts",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "5000"
+      ]
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./mlflow.db:/app/mlflow.db
+      - ./mlartifacts:/app/mlartifacts
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bank-backend
+    environment:
+      MLFLOW_TRACKING_URI: http://mlflow:5000
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./mlflow.db:/app/mlflow.db
+      - ./mlartifacts:/app/mlartifacts
+    depends_on:
+      - mlflow
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: bank-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend

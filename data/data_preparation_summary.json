@@ -1,0 +1,19 @@
+{
+  "raw_rows": 45211,
+  "clean_rows": 45211,
+  "dropped_duplicates": 0,
+  "feature_count": 15,
+  "target_column": "y",
+  "excluded_features": [
+    "duration"
+  ],
+  "numeric_transformations": [
+    "median_imputation",
+    "standardization"
+  ],
+  "categorical_transformations": [
+    "most_frequent_imputation",
+    "one_hot_encoding"
+  ],
+  "normalization_note": "Global normalization is not applied to tree models. Standardization is applied to numeric features and supports the linear baseline."
+}

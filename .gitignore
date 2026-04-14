@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+.env
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# MLflow and runtime artifacts
+mlruns/
+mlartifacts/
+mlflow.db
+
+# Local generated reports and caches
+uvicorn_out.log
+uvicorn_err.log
+uvicorn_batch_fix.log
+
+# Keep source, docs, and project assets tracked by default

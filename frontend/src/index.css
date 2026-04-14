@@ -1,0 +1,247 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --bg-dark: #0f172a;
+  --card-bg: rgba(30, 41, 59, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --success: #22c55e;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  min-height: 100vh;
+  background-image:
+    radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.1) 0px, transparent 50%);
+}
+
+#root {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.dashboard-header {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.dashboard-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(to right, #818cf8, #c084fc);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-header p {
+  color: var(--text-muted);
+}
+
+.grid-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 968px) {
+  .grid-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.glass-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #fff;
+}
+
+/* Form Styles */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.form-group input,
+.form-group select {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid var(--glass-border);
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  color: #fff;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: var(--primary);
+}
+
+.btn-primary {
+  grid-column: span 2;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+}
+
+/* Prediction Result */
+.result-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.probability-circle {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 8px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+  position: relative;
+  transition: all 0.5s ease-out;
+}
+
+.probability-circle .value {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.probability-circle .label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.status-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.875rem;
+}
+
+.status-stayed {
+  background: rgba(34, 197, 94, 0.1);
+  color: var(--success);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.status-exited {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--danger);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+/* Upload Dropzone */
+.dropzone {
+  border: 2px dashed var(--glass-border);
+  border-radius: 1rem;
+  padding: 3rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.dropzone:hover {
+  border-color: var(--primary);
+  background: rgba(99, 102, 241, 0.05);
+}
+
+.dropzone p {
+  color: var(--text-muted);
+  margin-top: 1rem;
+}
+
+/* Table Style for Batch */
+.batch-table-container {
+  overflow-x: auto;
+  margin-top: 1.5rem;
+}
+
+.batch-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.batch-table th,
+.batch-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.batch-table th {
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.batch-table tr:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
