@@ -11,6 +11,20 @@ An end-to-end machine learning, BI, and MLOps solution for bank subscription pre
 - Business-oriented React dashboard with explainability and paginated batch review
 - Dockerized backend, frontend, and MLflow services for reproducible local deployment
 
+## Product Preview
+
+### Executive dashboard
+
+![Executive dashboard](docs/screenshots/dashboard-overview.png)
+
+### Customer scoring and scenario planning
+
+![Customer scoring and scenario planning](docs/screenshots/dashboard-scoring.png)
+
+### Batch scoring workspace
+
+![Batch scoring workspace](docs/screenshots/dashboard-batch.png)
+
 ## Suggested GitHub Topics
 
 `machine-learning` `mlops` `fastapi` `react` `mlflow` `xgboost` `scikit-learn` `business-intelligence` `bank-marketing` `docker`
