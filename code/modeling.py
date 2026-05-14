@@ -53,12 +53,14 @@ def model_configs() -> dict:
     configs = {
         "LogisticRegression_Baseline": {
             "model": LogisticRegression(random_state=42, class_weight="balanced", max_iter=1500),
+            "use_smote": False,
             "params": {
                 "classifier__C": [0.5, 1.0, 2.0],
             },
         },
         "GradientBoosting_SMOTE": {
             "model": GradientBoostingClassifier(random_state=42),
+            "use_smote": True,
             "params": {
                 "classifier__n_estimators": [100, 200],
                 "classifier__learning_rate": [0.05, 0.1],
@@ -67,6 +69,7 @@ def model_configs() -> dict:
         },
         "RandomForest_Baseline": {
             "model": RandomForestClassifier(random_state=42, class_weight="balanced"),
+            "use_smote": False,
             "params": {
                 "classifier__n_estimators": [150],
                 "classifier__max_depth": [12, None],
@@ -80,6 +83,7 @@ def model_configs() -> dict:
                 random_state=42,
                 eval_metric="logloss",
             ),
+            "use_smote": True,
             "params": {
                 "classifier__n_estimators": [150, 250],
                 "classifier__learning_rate": [0.05, 0.1],
@@ -143,14 +147,13 @@ def run_experiment(
     y_train: pd.Series,
     y_test: pd.Series,
     preprocessor: ColumnTransformer,
+    use_smote: bool,
 ) -> tuple[ImbPipeline, dict]:
-    pipeline = ImbPipeline(
-        steps=[
-            ("preprocessor", preprocessor),
-            ("smote", SMOTE(random_state=42)),
-            ("classifier", model),
-        ]
-    )
+    pipeline_steps = [("preprocessor", preprocessor)]
+    if use_smote:
+        pipeline_steps.append(("smote", SMOTE(random_state=42)))
+    pipeline_steps.append(("classifier", model))
+    pipeline = ImbPipeline(steps=pipeline_steps)
     search = GridSearchCV(
         estimator=pipeline,
         param_grid=params,
@@ -229,6 +232,7 @@ def train_and_select_best_model() -> None:
                 y_train=y_train,
                 y_test=y_test,
                 preprocessor=preprocessor,
+                use_smote=cfg.get("use_smote", False),
             )
             all_metrics.append(metrics)
             if metrics["f1"] > best_f1:

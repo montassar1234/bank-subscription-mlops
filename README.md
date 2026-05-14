@@ -42,7 +42,7 @@ Important methodological decision:
 
 ## Data Preparation
 
-Data preparation is a central part of this project and is implemented in [data_preparation.py](/C:/Users/a/Downloads/bank-subscription-mlops-main/bank-subscription-mlops-main/code/data_preparation.py).
+Data preparation is a central part of this project and is implemented in [code/data_preparation.py](code/data_preparation.py).
 
 ### What the preparation pipeline does
 
@@ -77,8 +77,8 @@ Why global normalization is not used:
 
 The project now produces:
 
-- [feature_analysis_report.csv](/C:/Users/a/Downloads/bank-subscription-mlops-main/bank-subscription-mlops-main/data/feature_analysis_report.csv)
-- [data_preparation_summary.json](/C:/Users/a/Downloads/bank-subscription-mlops-main/bank-subscription-mlops-main/data/data_preparation_summary.json)
+- [data/feature_analysis_report.csv](data/feature_analysis_report.csv)
+- [data/data_preparation_summary.json](data/data_preparation_summary.json)
 
 Each feature is reviewed using:
 
@@ -97,7 +97,7 @@ Current logic:
 
 ## Modeling
 
-Training is implemented in [modeling.py](/C:/Users/a/Downloads/bank-subscription-mlops-main/bank-subscription-mlops-main/code/modeling.py).
+Training is implemented in [code/modeling.py](code/modeling.py).
 
 ### Models compared
 
@@ -110,16 +110,18 @@ Training is implemented in [modeling.py](/C:/Users/a/Downloads/bank-subscription
 
 - stratified train/test split
 - preprocessing included in the pipeline
-- SMOTE used for imbalance handling where configured
+- true baseline models trained without SMOTE
+- SMOTE used only for the explicitly oversampled candidates
 - `GridSearchCV` for hyperparameter tuning
 - evaluation with `accuracy`, `f1`, and `roc_auc`
 - confusion matrix and ROC curve exported for each model
 
 ### Current tracked result
 
-The current champion model is:
+The current champion model can change after each training run and is always exported to:
 
-- `RandomForest_Baseline`
+- [data/model_metrics.csv](data/model_metrics.csv)
+- [data/best_model_pipeline.pkl](data/best_model_pipeline.pkl)
 
 Why this is important:
 - the best model is selected after removing the leaking variable `duration`
@@ -145,7 +147,7 @@ Default storage:
 
 ## API
 
-The backend is built with FastAPI in [app.py](/C:/Users/a/Downloads/bank-subscription-mlops-main/bank-subscription-mlops-main/code/app.py).
+The backend is built with FastAPI in [code/app.py](code/app.py).
 
 ### Main endpoints
 
@@ -165,6 +167,11 @@ The backend is built with FastAPI in [app.py](/C:/Users/a/Downloads/bank-subscri
 - dashboard data delivery
 - feature preparation and governance visibility
 
+Batch scoring notes:
+
+- accepts comma-separated and semicolon-separated CSV files
+- tolerates legacy columns such as `duration` and `y` by dropping them before scoring
+
 Swagger UI:
 - [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 
@@ -173,20 +180,18 @@ ReDoc:
 
 ## Frontend Dashboard
 
-The frontend is built with React and Vite in [frontend/src/App.jsx](/C:/Users/a/Downloads/bank-subscription-mlops-main/bank-subscription-mlops-main/frontend/src/App.jsx).
+The frontend is built with React and Vite in [frontend/src/App.jsx](frontend/src/App.jsx).
 
-The dashboard includes:
+The dashboard is now business-oriented and includes:
 
-- executive KPI snapshot
-- high-value segment view
-- model governance board
-- individual scoring console
-- explainability board
-- what-if simulator
-- batch scoring center
-- data preparation section
-- feature selection justification section
-- professor-friendly project narrative
+- executive KPI strip for portfolio size, conversion baseline, balance, and campaign pressure
+- portfolio opportunities panel for high-conversion customer segments
+- campaign actions panel driven by explainability-based business levers
+- customer scoring workspace for individual lead evaluation
+- decision summary with probability, propensity band, and next action
+- scenario planner for controllable outreach adjustments
+- model drivers view for top production features
+- batch scoring workspace with page navigation and configurable page size
 
 ## Project Structure
 
@@ -281,6 +286,11 @@ npm run dev
 - API: [http://127.0.0.1:8000](http://127.0.0.1:8000)
 - MLflow: [http://127.0.0.1:5000](http://127.0.0.1:5000)
 
+Optional frontend environment variables:
+
+- `VITE_API_BASE_URL` to point the UI to a different backend
+- `VITE_MLFLOW_UI_URL` to point the UI to a different MLflow server
+
 ## Run with Docker
 
 ```bash
@@ -297,7 +307,7 @@ Docker access:
 
 - It does not rely on a leaking feature for the main production score.
 - It shows that preprocessing decisions are explicit and reproducible.
-- It compares multiple models instead of presenting one result without context.
+- It compares true baseline models against oversampled alternatives instead of presenting one result without context.
 - It exposes data preparation, feature decisions, and model governance in the dashboard.
 - It links machine learning outputs to business actions and BI storytelling.
 

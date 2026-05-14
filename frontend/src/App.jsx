@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+const MLFLOW_UI_URL = import.meta.env.VITE_MLFLOW_UI_URL || "http://localhost:5000";
 
 function formatPercent(value, digits = 1) {
   return `${Number(value || 0).toFixed(digits)}%`;
@@ -206,7 +207,7 @@ export default function App() {
             <a href={`${API_BASE_URL}/docs`} target="_blank" rel="noreferrer">
               API Documentation
             </a>
-            <a href="http://127.0.0.1:5001" target="_blank" rel="noreferrer">
+            <a href={MLFLOW_UI_URL} target="_blank" rel="noreferrer">
               Model Tracking
             </a>
           </div>
