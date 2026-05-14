@@ -2,6 +2,32 @@
 
 An end-to-end machine learning, BI, and MLOps solution for bank subscription prediction, featuring robust data preparation, leakage-aware modeling, experiment tracking with MLflow, REST API deployment with FastAPI, and a business-focused React interface for scoring and campaign analysis.
 
+## Highlights
+
+- End-to-end ML workflow from raw banking data to deployed prediction service
+- Leakage-aware feature selection with `duration` excluded from production scoring
+- MLflow experiment tracking for runs, metrics, parameters, artifacts, and model governance
+- FastAPI backend for single prediction, batch scoring, and scenario simulation
+- Business-oriented React dashboard with explainability and paginated batch review
+- Dockerized backend, frontend, and MLflow services for reproducible local deployment
+
+## Suggested GitHub Topics
+
+`machine-learning` `mlops` `fastapi` `react` `mlflow` `xgboost` `scikit-learn` `business-intelligence` `bank-marketing` `docker`
+
+## Architecture
+
+```mermaid
+flowchart LR
+    A["Raw dataset<br/>bank-full.csv"] --> B["Data preparation<br/>cleaning + feature review"]
+    B --> C["Model training<br/>baseline + SMOTE candidates"]
+    C --> D["MLflow tracking<br/>params + metrics + artifacts"]
+    C --> E["Best model export<br/>best_model_pipeline.pkl"]
+    E --> F["FastAPI scoring API"]
+    F --> G["React dashboard"]
+    D --> G
+```
+
 ## Project Objective
 
 The objective is to support bank campaign planning with a realistic `pre-contact` prediction system.
